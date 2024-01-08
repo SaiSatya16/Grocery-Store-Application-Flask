@@ -1,7 +1,7 @@
-1)Import the following libraries:
+*1)Import the following libraries:*
 flask, flask_sqlalchemy, flask_restful, os, render_template ,request,redirect, url_for, Resource, Api, fields, marshal_with, reqparse, werkzeug.exceptions, HTTPException, flask_cors, CORS, json
 
-2)After installing the required libraries type python in the terminal.
+*2)After installing the required libraries type python in the terminal.*
 3)Enter "from app import *" in python terminal.
 4)Enter "db.create_all()" to create database and Enter "exit()" to quit the python terminal.
 5)Now type python app.py in the terminal.
