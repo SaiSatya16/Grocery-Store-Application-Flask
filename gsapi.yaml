@@ -1,0 +1,394 @@
+openapi: 3.0.0
+info:
+  title: Grocessory Store Open API Documentation
+  version: 1.0.0
+  description: >
+
+    <h2> Error Codes </h2>  <table>
+      <thead>
+        <th>status_code</th>
+        <th>Error Code</th>
+        <th>Message</th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>400</td>
+        <td>BE1001</td>
+        <td>Category name is required</td>
+      </tr>
+      <tr>
+        <td>400</td>
+        <td>BE1002</td>
+        <td>Category unit is required</td>
+      </tr>
+      <tr>
+        <td>400</td>
+        <td>BE1003</td>
+        <td>Category rate is required</td>
+      </tr>
+      <tr>
+        <td>400</td>
+        <td>BE1004</td>
+        <td>duplicate Category</td>
+      </tr>
+      <tr>
+        <td>400</td>
+        <td>BE1005</td>
+        <td>Category manufacture_date is required</td>
+      </tr>
+      <tr>
+        <td>400</td>
+        <td>BE1006</td>
+        <td>Category expiry_date is required</td>
+      </tr>
+        <tr>
+        <td>400</td>
+        <td>BE1007</td>
+        <td>Category category_id is required</td>
+      </tr>
+        <tr>
+        <td>400</td>
+        <td>BE1008</td>
+        <td>Category quantity is required</td>
+      </tr>
+
+      </tbody>
+    </table>
+servers:
+  - url: http://127.0.0.1:5000/
+paths:
+  /api/category/{id}:
+    description: End point to read, update and delete a Category resource with id.
+    get:
+      description: Operation to get a Category details
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: Category object
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Fruits
+
+        '400':
+          description: Bad request.
+        '404':
+          description: Resource not found.
+        '500':
+          description: Internal Server Error.
+    put:
+      description: Operation to update the Category name
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Fruits
+      responses:
+        '200':
+          description: Successfuly updated.
+          content:
+            application/json:
+              schema:
+                title: Category object
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Fruits
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+        '404':
+          description: Category you requested to update not found
+        '500':
+          description: Internal Server Error
+    delete:
+      description: Operation to delete the Category.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Successfully Deleted.
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+        '404':
+          description: Category does not exist.
+        '500':
+          description: Intenal Server Error.
+  /api/category:
+    description: End point to create a Category.
+    post:
+      description: Operation to create the Category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Category object
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Fruits
+      responses:
+        '201':
+          description: Successfully Created.
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+        '409':
+          description: id already exist.
+        '500':
+          description: Internal Server Error.
+  /api/product/{id}:
+    description: End point to read, update and delete a Product resource with id.
+    get:
+      description: Operation to get a Product details
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: product object
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: banana
+                  unit:
+                    type: string
+                    example: Rs/kg
+                  rate:
+                    type: integer
+                    example: 50
+                  quantity:
+                    type: integer
+                    example: 100
+                  manufacture_date:
+                    type: string
+                    example: 2023-07-22
+                  expiry_date:
+                    type: string
+                    example: 2023-07-22
+                  category_id:
+                    type: integer
+                    example: 1
+        '400':
+          description: Bad request.
+        '404':
+          description: Resource not found.
+        '500':
+          description: Internal Server Error.
+    put:
+      description: Operation to update the Product detail
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                  name:
+                    type: string
+                    example: banana
+                  unit:
+                    type: string
+                    example: Rs/kg
+                  rate:
+                    type: integer
+                    example: 50
+                  quantity:
+                    type: integer
+                    example: 100
+                  manufacture_date:
+                    type: string
+                    example: 2023-07-22
+                  expiry_date:
+                    type: string
+                    example: 2023-07-22
+                  category_id:
+                    type: integer
+                    example: 1
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: Product object
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: banana
+                  unit:
+                    type: string
+                    example: Rs/kg
+                  rate:
+                    type: integer
+                    example: 50
+                  quantity:
+                    type: integer
+                    example: 100
+                  manufacture_date:
+                    type: string
+                    example: 2023-07-22
+                  expiry_date:
+                    type: string
+                    example: 2023-07-22
+                  category_id:
+                    type: integer
+                    example: 1    
+          
+        '404':
+          description: Resource you requested to update not found
+        '500':
+          description: Internal Server Error
+    delete:
+      description: Operation to delete the Product.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Successfully Deleted.
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+        '404':
+          description: Product does not exist.
+        '500':
+          description: Intenal Server Error.
+  /api/product:
+    description: End point to create a Product.
+    post:
+      description: Operation to create the Product
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Product object
+              type: object
+              properties:
+                  name:
+                    type: string
+                    example: banana
+                  unit:
+                    type: string
+                    example: Rs/kg
+                  rate:
+                    type: integer
+                    example: 50
+                  quantity:
+                    type: integer
+                    example: 100
+                  manufacture_date:
+                    type: string
+                    example: 2023-07-22
+                  expiry_date:
+                    type: string
+                    example: 2023-07-22
+                  category_id:
+                    type: integer
+                    example: 1
+      responses:
+        '201':
+          description: Successfully Created.
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+        '409':
+          description: id already exist.
+        '500':
+          description: Internal Server Error.

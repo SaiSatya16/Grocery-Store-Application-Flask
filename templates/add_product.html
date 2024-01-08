@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Form</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Product Form</h2>
+    <form  method="post">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="unit">Unit:</label>
+        <select class="form-control" id="unit" name="unit">
+          <option value="Rs/kg">Rs/kg</option>
+          <option value="Rs/Litre">Rs/Litre</option>
+          <option value="Rs/dozen">Rs/Dozen</option>
+          <option value="Rs/gram">Rs/Gram</option>
+          <option value="Rs/Item">Rs/Item</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="rate">Rate/unit:</label>
+        <input type="number" class="form-control" id="rate" name="rate" required>
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantity:</label>
+        <input type="number" class="form-control" id="quantity" name="quantity" required>
+      </div>
+      <div class="form-group">
+        <label for="manufacture_date">Manufacture Date:</label>
+        <input type="date" class="form-control" id="manufacture_date" name="manufacture_date" required>
+      </div>
+      <div class="form-group">
+        <label for="expiry_date">Expiry Date:</label>
+        <input type="date" class="form-control" id="expiry_date" name="expiry_date" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>

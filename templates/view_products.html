@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      color: #333333;
+    }
+
+    .navbar {
+      background-color: #343a40 !important;
+    }
+
+    .navbar-brand {
+      font-size: 1.5rem;
+    }
+
+    .navbar-dark .navbar-nav .nav-link {
+      color: #ffffff;
+    }
+
+    .navbar-dark .navbar-nav .nav-link:hover {
+      color: #bbbbbb;
+    }
+
+    .container {
+      max-width: 800px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+    }
+    .card {
+      margin-bottom: 20px;
+      transition: outline 0.2s ease; /* Add a transition effect */
+    }
+
+    .card:hover {
+      outline: 2px solid #007bff; /* Highlight the outline on hover */
+    }
+    .input-group-append {
+      margin-bottom: 20px;
+      transition: outline 0.2s ease;
+    }
+    .input-group-append:hover{
+      outline: 2px solid #007bff;
+    }
+
+
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+
+    .card-text {
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+      background-color: #0069d9;
+      border-color: #0062cc;
+    }
+
+    /* Dark Mode */
+    .dark-mode {
+      background-color: #333333;
+      color: #ffffff;
+    }
+
+    .dark-mode .navbar {
+      background-color: #212529 !important;
+    }
+
+    .dark-mode .navbar-dark .navbar-nav .nav-link {
+      color: #ffffff;
+    }
+
+    .dark-mode .navbar-dark .navbar-nav .nav-link:hover {
+      color: #cccccc;
+    }
+
+    .dark-mode .card {
+      background-color: #212529;
+      color: #ffffff;
+    }
+
+    .dark-mode .card-title {
+      color: #ffffff;
+    }
+
+    .dark-mode .card-text {
+      color: #cccccc;
+    }
+
+    .dark-mode .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+
+    .dark-mode .btn-primary:hover {
+      background-color: #0069d9;
+      border-color: #0062cc;
+    }
+
+  </style>
+  <title>Grocery Store Dashboard</title>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/user_dashboard/{{name}}">Grocery Store</a>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/my_account/{{name}}">My Account</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/">Logout</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/view_cart/{{name}}">Cart</a>
+      </li>
+      <li class="nav-item">
+        <a class="btn btn-sm btn-outline-secondary" href="#" onclick="toggleDarkMode()">Dark Mode</a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Welcome Message -->
+  <div class="container mt-5">
+    <h1>Welcome to the Grocery Store Dashboard</h1>
+    <div class="input-group mt-3">
+      <input type="text" class="form-control" id="productSearch" placeholder="Search name">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button" onclick="searchProducts()">Search</button>
+      </div>
+        <input type="text" class="form-control" id="searchPrice" placeholder="Search price">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button" onclick="searchPrice()">Search</button>
+      </div>
+      <input type="text" class="form-control" id="searchmd" placeholder="Search MFG Date">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button" onclick="searchmd()">Search</button>
+      </div>
+    </div>
+    <div class="input-group-append">
+      <select class="form-control" id="sortingOptions" onchange="sortProducts()">
+        <option value="default">Sort by</option>
+        <option value="lowToHigh">Price: Low to High</option>
+        <option value="highToLow">Price: High to Low</option>
+      </select>
+    </div>
+  </div>
+  
+  
+  {% if products|length == 0 %}
+  <h2> No Products Found for {{c.name}}</h2>
+
+  {% else %}
+  
+  <!-- Products with Thumbnails -->
+  <div class="container">
+    <h2>Shop for {{c.name}}</h2>
+    <div class="row mt-5">
+      {% for i in range(0,products|length) %}
+      <div class="col-sm-4">
+        <div class="card">
+          <img src="/static/uploads/{{products[i].name}}.png" class="card-img-top" alt="">
+          <div class="card-body">
+            <h5 class="card-title">{{products[i].name}}</h5>
+            <p class="card-text">At ₹{{products[i].rate}} only </p>
+            <div class="card-text">
+              <small class="text-muted">MFG Date: {{products[i].manufacture_date}}</small>
+            </div>
+            <form action="/add_to_cart/{{name}}/{{c.id}}/{{products[i].id}}" onsubmit="return confirm()" method="post">
+              {% if products[i].quantity != 0 %}
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="Qty" name="Qty" placeholder="Enter Qty" aria-label="Enter unit" aria-describedby="unit-addon" required>
+                
+              </div>
+              
+              <div> <button type="submit" class="btn btn-primary">Add to Cart</button> </div>
+              {% else %}
+              <div> <button  class="btn btn-danger">Out of Stock</button> </div>
+              {% endif %}
+            </form>
+            <!-- <a href="/add_to_cart/{{name}}/{{c.id}}/{{products[i].id}}/{{products[i].name}}/{{products[i].rate}}/{{products[i].unit}}" class="btn btn-primary">Add to Cart</a> -->
+          </div>
+
+          <div class="card-footer">
+            <small class="text-muted">Unit: {{products[i].unit}} | Available: {{products[i].quantity}}</small>
+          </div>
+
+          <div class="card-footer">
+            <small class="text-muted">Expiry Date: {{products[i].expiry_date}}</small>
+          </div>
+        </div>
+      </div>
+      
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    function toggleDarkMode() {
+      const body = document.body;
+      body.classList.toggle("dark-mode");
+    }
+  
+    function searchProducts() {
+      const inputText = document.getElementById("productSearch").value.toLowerCase();
+      const cards = document.querySelectorAll(".card");
+  
+      cards.forEach((card) => {
+        const productName = card.querySelector(".card-title").textContent.toLowerCase();
+        card.style.display = "block";
+  
+      if (productName.includes(inputText) ) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+      });
+    }
+    function searchPrice() {
+      const inputText = document.getElementById("searchPrice").value.toLowerCase();
+      const cards = document.querySelectorAll(".card");
+  
+      cards.forEach((card) => {
+        const productName = card.querySelector(".card-text").textContent.toLowerCase();
+        card.style.display = "block";
+  
+      if (productName.includes(inputText) ) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+      });
+    }
+    function searchmd() {
+      const inputText = document.getElementById("searchmd").value.toLowerCase();
+      const cards = document.querySelectorAll(".card");
+  
+      cards.forEach((card) => {
+        const productName = card.querySelector(".text-muted").textContent.toLowerCase();
+        card.style.display = "block";
+  
+      if (productName.includes(inputText) ) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+      });
+    }
+    function sortProducts() {
+    const selectedOption = document.getElementById("sortingOptions").value;
+    const cards = document.querySelectorAll(".card");
+
+    const sortedCards = Array.from(cards).sort((a, b) => {
+      const aPrice = parseFloat(a.querySelector(".card-text").textContent.match(/₹(\d+)/)[1]);
+      const bPrice = parseFloat(b.querySelector(".card-text").textContent.match(/₹(\d+)/)[1]);
+
+      if (selectedOption === "lowToHigh") {
+        return aPrice - bPrice;
+      } else if (selectedOption === "highToLow") {
+        return bPrice - aPrice;
+      } else {
+        // If the default option is selected, show all products
+        card.style.display = "block";
+        return 0;
+      }
+    });
+
+    // Append the sorted cards back to the parent container
+    const parentContainer = cards[0].parentElement;
+    parentContainer.innerHTML = ''; // Clear the container
+    sortedCards.forEach(card => {
+      parentContainer.appendChild(card);
+    });
+  }
+  function confirm(){
+    alert ("Product Successfully added to Cart")
+  }
+
+  </script>
+  
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    
+    <style>
+        body {
+            background-color: #f2f2f2; /* Set a default background color */
+            color: #333; /* Set a default text color */
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #333;
+            color: #f2f2f2;
+        }
+
+        /* Welcome message styles */
+        .welcome-message {
+            margin-top: 100px;
+            font-size: 24px;
+        }
+
+        /* Navigation bar styles */
+        .navbar {
+            background-color: #333;
+            color: #f2f2f2;
+            padding: 20px;
+        }
+
+        .navbar a {
+            color: #f2f2f2;
+            margin-right: 10px;
+            text-decoration: none;
+        }
+
+        .navbar .contact-link {
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a class="contact-link" href="/about">Contact Us</a>
+
+    </nav>
+
+    <div class="container text-center">
+        <h1>GROCESSORY STORE APP</h1>
+        <div>
+            <a class="btn btn-primary" href="/login">Login</a>
+        </div>
+        <div>&nbsp;&nbsp;</div>
+        <div>
+
+            <a class="btn btn-primary" href="/signup">Signup</a>
+        </div>
+        <div>&nbsp;&nbsp;</div>
+        <div>
+            <a class="btn btn-primary" href="/adminlogin">Admin Login</a>
+        </div>
+    </div>
+
+    <!-- Welcome message -->
+    <div class="container text-center welcome-message">
+        <h2>Welcome to our Grocessory Store App!</h2>
+    </div>
+
+    <!-- Navigation bar -->
+    
+    <script>
+        // Dark mode toggle functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+        
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+        });
+    </script>
+</body>
+</html>
